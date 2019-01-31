@@ -4,7 +4,7 @@ library(tidyverse)
 
 list.files()
 
-df=read_csv("screening_exercise_orders_v201810.csv")
+df=read_csv("seo.csv")
 colnames(df)
 head(df)
 
