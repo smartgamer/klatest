@@ -4,7 +4,7 @@ library(tidyverse)
 
 list.files()
 
-df=read_csv("seo.csv")
+df=read_csv("screening_exercise_orders_v201810.csv")
 colnames(df)
 head(df)
 
@@ -30,7 +30,6 @@ dfw=df %>%
   mutate(weekth=week(ymd_hms(date)))  %>% 
   group_by(weekth) %>%
   summarise(count=n())
-plot(dfw$weekth,dfw$count)
 p = dfw %>% 
   ggplot(aes(x=weekth, y=count)) +
   geom_point()+
@@ -57,10 +56,24 @@ table(dfgp)
 library(gmodels)
 CrossTable(dfgp$gender,dfgp$predicted_gender,chisq=TRUE)
 
+dfgp$gender= as.factor(dfgp$gender)  
+dfgp$predicted_gender=as.factor(dfgp$predicted_gender)
+summary(dfgp)
+library(caret)
+confusionMatrix(dfgp$gender,dfgp$predicted_gender, positive = "1")
 
-#   
+#although the accuracy is 0.6383, the kappa statistic is only 0.2772, which suggests the prediction is not a very good compared to random guess.
+
+# measure performance using ROC curve
+library(ROCR)
+pred = prediction(predictions = dfgp$predicted_gender, labels = dfgp$gender)
+perf = performance(pred, measure = "tpr", x.measure = "fpr")
+plot(perf, main = "ROC curve for SMS spam filter", col = "blue", lwd = 3)
+abline(a = 0, b = 1, lwd = 2, lty = 2)
+perf.auc <- performance(pred, measure = "auc")
+
 # E) Describe one of your favorite tools or techniques and give a small example of how it's helped you solve a problem. Limit your answer to one paragraph.----
-
+I recently found fread function from daa.table package is a very good method to read large data file. It reads file at much higher speed than the regular read.csv function.  
 
 
 
