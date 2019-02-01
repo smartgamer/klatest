@@ -64,9 +64,9 @@ confusionMatrix(dfgp$gender,dfgp$predicted_gender, positive = "1")
 
 #although the accuracy is 0.6383, the kappa statistic is only 0.2772, which suggests the prediction is not a very good compared to random guess.
 
-# measure performance using ROC curve
+# measure performance using ROC curve. # we can't use this because we don't have a probability prediction
 library(ROCR)
-pred = prediction(predictions = dfgp$predicted_gender, labels = dfgp$gender)
+pred = prediction(predictions = dfgp$predicted_gender, labels = dfgp$gender) # we can't use this because we don't have a probability prediction
 perf = performance(pred, measure = "tpr", x.measure = "fpr")
 plot(perf, main = "ROC curve for SMS spam filter", col = "blue", lwd = 3)
 abline(a = 0, b = 1, lwd = 2, lty = 2)
