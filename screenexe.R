@@ -47,9 +47,9 @@ mean_1 = mean(dfg[dfg$gender==1,]$value)
 t.test(dfg[dfg$gender==0,]$value,dfg[dfg$gender==1,]$value)
 t.test(dfg[dfg$gender==0,]$value,dfg[dfg$gender==1,]$value,var.equal = TRUE)
 #p-value = 0.0482, if we set the threshold as 0.05, then it's statistically significant.
-# The assumptions made in t-tests are: data are continuous scale, random selected, sample means are normal distributed, sample size are large enough or sample population is normal ditributed, and finite variance of data. Although the default t test in R does not assume equal variance.
+# The assumptions made in t-tests are: data are continuous scale, random selected, sample means are normal distributed, sample size are large enough(>30) or sample population is normal ditributed, and finite variance of data. Although the default t test in R does not assume equal variance.
+# We can also try Wilcoxon tests or even permutation test if we believe the data does not fit the assumptions of t-test.
 
-#   
 # D) Assuming a single gender prediction was made for each customer, generate a confusion matrix for predicted gender. What does the confusion matrix tell you about the quality of the predictions?----
 dfgp=df[,c("gender","predicted_gender")]
 table(dfgp)
